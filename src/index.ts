@@ -1,28 +1,38 @@
 import express, { Application } from "express";
 import http from "http";
+import * as dotenv from "dotenv";
 import bodyParser from "body-parser";
 import cors from "cors";
-import cookieParser from "cookie-parser";
 import compression from "compression";
-import mongoose from "mongoose";
+import connectDB from "./db/connect";
+import userRouter from "./routes/userRouter";
+import postRouter from "./routes/postRouter";
+import { UserType } from "db/user/users";
+
+declare global {
+  namespace Express {
+    interface Request {
+      user: UserType;
+    }
+  }
+}
+
 const app: Application = express();
-app.use(
-  cors({
-    credentials: true,
-  })
-);
+dotenv.config();
+app.use(cors());
 app.use(compression());
-app.use(cookieParser());
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "1mb" }));
+app.use("/api/v1/post", postRouter);
+app.use("/api/v1/user", userRouter);
 
-const server = http.createServer(app);
-
-server.listen(3000, () => {
-  console.log("server runnuing on 3000");
-});
-
-const MONGO_URL = "mongodb://localhost:27017";
-
-mongoose.Promise = Promise;
-mongoose.connect(MONGO_URL);
-mongoose.connection.on("error", (error: Error) => console.log(error));
+const startServer = async () => {
+  try {
+    connectDB(process.env.MONGODB_URL);
+    app.listen(5000, () =>
+      console.log("server started at http://localhost:5000")
+    );
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+startServer();
