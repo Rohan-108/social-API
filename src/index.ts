@@ -7,6 +7,7 @@ import compression from "compression";
 import connectDB from "./db/connect";
 import userRouter from "./routes/userRouter";
 import postRouter from "./routes/postRouter";
+import followRouter from "./routes/followRouter";
 import { UserType } from "db/user/users";
 
 declare global {
@@ -24,6 +25,7 @@ app.use(compression());
 app.use(bodyParser.json({ limit: "1mb" }));
 app.use("/api/v1/post", postRouter);
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/follow", followRouter);
 
 const startServer = async () => {
   try {

@@ -2,6 +2,7 @@ import { UserModel as User, getUserByEmail } from "../db/user/users";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
+import { followModel } from "db/follower/follow";
 
 export const loginUser = async (req: Request, res: Response) => {
   const { email, pass } = req.body;
@@ -63,6 +64,31 @@ export const getPostByUser = async (req: Request, res: Response) => {
   try {
     const data = await User.find().populate({ path: "posts" });
     res.status(200).json({ success: true, data });
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+};
+
+// get all followers
+
+export const getFollowers = async (req: Request, res: Response) => {
+  try {
+    const data = await followModel.find({
+      following: req.user._id,
+    });
+    res.status(200).json({ data });
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+};
+// get all followings
+
+export const getFollowings = async (req: Request, res: Response) => {
+  try {
+    const data = await followModel.find({
+      followedBy: req.user._id,
+    });
+    res.status(200).json({ data });
   } catch (error) {
     res.status(500).json(error.message);
   }
