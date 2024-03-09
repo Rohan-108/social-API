@@ -1,0 +1,12 @@
+import express from "express";
+import { createUser, getUserByEmail } from "db/users";
+export const register = async (req: express.Request, res: express.Response) => {
+  try {
+    const { email, password, username } = req.body;
+    if (!email || !password || !username) {
+      return res.status(400).send("fields is missing");
+    }
+    const existingUser = await getUserByEmail(email);
+    if (existingUser) return res.sendS;
+  } catch (error) {}
+};
