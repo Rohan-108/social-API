@@ -57,9 +57,9 @@ export const updatePost = async (req: Request, res: Response) => {
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).json({ message: "id not correct" });
   try {
-    const post = await getPostById(id);
+    const prevpost = await getPostById(id);
     //post not made by this user
-    if (post.postedBy !== req.user._id) {
+    if (prevpost.postedBy !== req.user._id) {
       return res.status(401).json("Unautjorized");
     }
     const updatedPost = await Post.findByIdAndUpdate(

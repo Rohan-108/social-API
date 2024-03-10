@@ -1,9 +1,8 @@
 import mongoose, { Types } from "mongoose";
 
 export interface followType {
-  content: string;
-  likes: number;
-  postedBy: Types.ObjectId;
+  followedBy: Types.ObjectId;
+  following: Types.ObjectId;
 }
 
 const followSchema = new mongoose.Schema(

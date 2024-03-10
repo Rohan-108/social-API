@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { Request, Response } from "express";
-import { followModel as Follow } from "db/follower/follow";
-import { getUserById } from "db/user/users";
+import { followModel as Follow } from "../db/follower/follow";
+import { getUserById } from "../db/user/users";
 
 export const follow = async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -11,7 +11,7 @@ export const follow = async (req: Request, res: Response) => {
     const userToBeFollowed = await getUserById(id);
     if (!userToBeFollowed)
       return res.status(404).json({ message: "user doesn't exist" });
-    const already = await Follow.find({
+    const already = await Follow.findOne({
       followedBy: req.user._id,
       following: userToBeFollowed._id,
     });
@@ -36,7 +36,7 @@ export const unfollow = async (req: Request, res: Response) => {
     const userToBeFollowed = await getUserById(id);
     if (!userToBeFollowed)
       return res.status(404).json({ message: "user doesn't exist" });
-    const already = await Follow.find({
+    const already = await Follow.findOne({
       followedBy: req.user._id,
       following: userToBeFollowed._id,
     });
