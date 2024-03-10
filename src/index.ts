@@ -8,6 +8,7 @@ import userRouter from "./routes/userRouter";
 import postRouter from "./routes/postRouter";
 import followRouter from "./routes/followRouter";
 import { UserType } from "./db/user/users";
+import { limiter } from "./middleware/rateLimiter";
 
 declare global {
   namespace Express {
@@ -22,6 +23,7 @@ dotenv.config();
 app.use(cors());
 app.use(compression());
 app.use(bodyParser.json({ limit: "1mb" }));
+app.use(limiter);
 app.use("/api/v1/post", postRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/follow", followRouter);
