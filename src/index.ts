@@ -1,5 +1,4 @@
 import express, { Application } from "express";
-import http from "http";
 import * as dotenv from "dotenv";
 import bodyParser from "body-parser";
 import cors from "cors";
@@ -8,7 +7,7 @@ import connectDB from "./db/connect";
 import userRouter from "./routes/userRouter";
 import postRouter from "./routes/postRouter";
 import followRouter from "./routes/followRouter";
-import { UserType } from "db/user/users";
+import { UserType } from "./db/user/users";
 
 declare global {
   namespace Express {
@@ -38,3 +37,5 @@ const startServer = async () => {
   }
 };
 startServer();
+
+export { app };

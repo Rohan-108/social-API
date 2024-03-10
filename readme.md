@@ -102,7 +102,7 @@ This API is designed to facilitate the development of social networking applicat
   - Requires JWT token in the Authorization header.
   - Returns a success message upon unfollowing.
 
-### Environment Variables
+### Environment Variables & Setup
 
 To run this application locally, you must have MongoDb locally or you can use MONGO ATLAS and you will need to set up the following environment variables in a `.env` file:
 
@@ -110,5 +110,7 @@ To run this application locally, you must have MongoDb locally or you can use MO
 - `JWT_SECRET`: Secret key for JWT token generation and verification.
 
 Make sure to replace placeholders like `:id` with actual user or post IDs in your requests.
+
+First clone this project and run `pnpm i` to install all dependencies.
 
 You can start the application by running `npm start`. Make sure MongoDB is running and accessible.
