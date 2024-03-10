@@ -26,12 +26,11 @@ app.use("/api/v1/post", postRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/follow", followRouter);
 
+const PORT = process.env.PORT || 5000;
 const startServer = async () => {
   try {
     connectDB(process.env.MONGODB_URL);
-    app.listen(5000, () =>
-      console.log("server started at http://localhost:5000")
-    );
+    app.listen(PORT, () => console.log(`server started at port ${PORT}`));
   } catch (error) {
     console.log(error.message);
   }
